@@ -9,6 +9,21 @@
 
 import UIKit
 
+open class IndentedLabel: UILabel {
+    
+    var textInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    
+    open override var intrinsicContentSize: CGSize {
+        get {
+            var _size = super.intrinsicContentSize
+            _size.width += textInsets.left + textInsets.right
+            _size.height += textInsets.top + textInsets.bottom
+            return _size
+        }
+    }
+    
+}
+
 open class LabelSegment: BetterSegmentedControlSegment {
     // MARK: Constants
     private struct DefaultValues {
@@ -57,7 +72,7 @@ open class LabelSegment: BetterSegmentedControlSegment {
     
     // MARK: BetterSegmentedControlSegment
     public var intrinsicContentSize: CGSize? {
-        selectedView.intrinsicContentSize
+        return selectedView.intrinsicContentSize
     }
     
     public lazy var normalView: UIView = {
@@ -79,7 +94,8 @@ open class LabelSegment: BetterSegmentedControlSegment {
                           font: UIFont,
                           textColor: UIColor,
                           accessibilityIdentifier: String?) -> UILabel {
-        let label = UILabel()
+//        let label = UILabel()
+        let label = IndentedLabel()
         label.text = text
         label.numberOfLines = numberOfLines
         label.backgroundColor = backgroundColor
